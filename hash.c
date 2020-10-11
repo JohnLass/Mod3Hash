@@ -19,7 +19,8 @@
 
 
 typedef struct ht {
-	queue_t *item[10];
+	queue_t **qTable;
+  uint32_t hsize;
 } ht_t;
  
 static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
@@ -64,26 +65,28 @@ static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
 }
 
 hashtable_t *hopen(uint32_t hsize) {
-	uint32_t i=0;
-	ht_t* queues = (ht_t*) malloc(hsize * sizeof(queue_t*));
-	for(i=0; i<hsize; i++)
-		queues->item[i] = qopen();
-	return((hashtable_t*)queues);
+  //memory allocation 
+  ht_t *ht;
+  if (!(ht=(ht_t*)malloc(sizeof(ht_t)))) {
+      printf("Error: Failure allocating memory\n");
+      return NULL;
+  }
+  if(!(ht->qTable=malloc(sizeof(void *)*hsize))){
+    printf("Error: Failure allocating memory\n");
+    return NULL;
+  }
+
+  //setting hashsize
+  ht->hsize=hsize;
+  
+  //setting queue pointers
+  queue_t **hold = ht->qTable;
+  for(int i=0; i<hsize; i++){
+    hold[i] = qopen();
+  }
+
+  return (hashtable_t*)ht;
 }
 
-
-void hclose(hashtable_t *htp){
-	uint32_t i= 0;
-	if(htp != NULL){
-		ht_t* hp = (ht_t *) htp;
-		for(i=0;hp->item[i] != NULL;i++){
-			qclose(hp->item[i]);
-			printf("here\n");
-		}
-	 
-		free(hp);
-	}
-	
-}
 	
 
