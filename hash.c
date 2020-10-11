@@ -88,5 +88,17 @@ hashtable_t *hopen(uint32_t hsize) {
   return (hashtable_t*)ht;
 }
 
+void hclose(hashtable_t *htp){
+  ht_t *ptr = (ht_t*)htp;
+  queue_t **hold = ptr->qTable;
+  if(htp!=NULL){
+    for(int i=0; i<ptr->hsize; i++){
+      qclose(hold[i]);
+    }
+  }
+  free(ptr->qTable);
+  free(ptr);
+}
+
 	
 
