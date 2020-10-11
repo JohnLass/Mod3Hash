@@ -6,6 +6,7 @@
 #include "hash.h"
 #include "queue.h"
 #include <stdlib.h>
+#include <stdio.h>
 /* 
  * SuperFastHash() -- produces a number between 0 and the tablesize-1.
  * 
@@ -16,8 +17,9 @@
  */
 #define get16bits(d) (*((const uint16_t *) (d)))
 
+
 typedef struct ht {
-	struct rq item[];
+	queue_t *item[10];
 } ht_t;
  
 static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
@@ -63,18 +65,25 @@ static uint32_t SuperFastHash (const char *data,int len,uint32_t tablesize) {
 
 hashtable_t *hopen(uint32_t hsize) {
 	uint32_t i=0;
-	rq_t* queues = malloc(hsize * sizeof(rq_t));
+	ht_t* queues = (ht_t*) malloc(hsize * sizeof(queue_t*));
 	for(i=0; i<hsize; i++)
-		queues[i] = qopen();
+		queues->item[i] = qopen();
 	return((hashtable_t*)queues);
 }
 
 
 void hclose(hashtable_t *htp){
-	uint32_t i;
-	for(i=0;htp[i]!=NULL;i++)
-		free(htp[i]);
-	return 0;
+	uint32_t i= 0;
+	if(htp != NULL){
+		ht_t* hp = (ht_t *) htp;
+		for(i=0;hp->item[i] != NULL;i++){
+			qclose(hp->item[i]);
+			printf("here\n");
+		}
+	 
+		free(hp);
+	}
+	
 }
 	
 

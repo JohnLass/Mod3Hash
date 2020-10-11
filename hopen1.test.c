@@ -12,9 +12,10 @@
 #include <stdlib.h>
 int main(void){
 	uint32_t size = 3;
-	hashtable_t *rtn;
-	rtn=hopen(size);
-	if(rtn==NULL)
+	hashtable_t *testp;
+	testp=hopen(size);
+	if(testp==NULL)
 		exit(EXIT_FAILURE);
+	hclose(testp);
 	exit(EXIT_SUCCESS);
 }
