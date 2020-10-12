@@ -1,6 +1,6 @@
 CFLAGS=-Wall -pedantic -std=c11 -g
 
-all: hopen1.test hput1.test hput2.test hput3.test put1.test hsearch.test hclose.test happly.test remove1.test
+all: hopen1.test hput1.test hput2.test hput3.test put1.test hsearch.test hclose.test happly.test remove1.test happly2.test
 
 %.o:  %.test.c hash.h listfun.h queue.h
 			gcc $(CFLAGS) -c $<  
@@ -32,7 +32,11 @@ happly.test:	happly.test.o	hash.o queue.o listfun.o
 remove1.test:	remove1.test.o hash.o queue.o listfun.o
 								gcc $(CFLAGS) hash.o queue.o listfun.o remove1.test.o -o remove1.test
 
+happly2.test: happly2.test.o hash.o queue.o listfun.o
+							gcc $(CFLAGS) hash.o queue.o listfun.o happly2.test.o -o happly2.test
+
+
 clean:
-				rm -f *.o hopen1.test hput1.test hput2.test hput3.test put1.test hclose.test hsearch.test remove1.test
+				rm -f *.o hopen1.test hput1.test hput2.test hput3.test put1.test hclose.test hsearch.test remove1.test happly2.test
 
 
