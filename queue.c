@@ -175,7 +175,7 @@ void* qsearch(queue_t *qp,bool (*searchfn)(void* elementp,const void* keyp),cons
 			}
 		}
 		if(ptr->front==NULL)
-			printf("Empty List");
+			printf("Empty List\n");
 		printf("Element Not Found.\n");
 		return NULL;
 	}
@@ -220,7 +220,7 @@ void* qremove(queue_t *qp,
 			}
 			
 		}else
-			printf("Empty List");
+			printf("Empty List\n");
 		if(flag == 0)
 			printf("Element Not Found.\n");
 	}
