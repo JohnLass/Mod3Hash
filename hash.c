@@ -90,17 +90,17 @@ hashtable_t *hopen(uint32_t hsize) {
 }
 
 void hclose(hashtable_t *htp){
-  ht_t *ptr = (ht_t*)htp;
-  queue_t **hold = ptr->qTable;
   if(htp!=NULL){
+		ht_t *ptr = (ht_t*)htp;
+		queue_t **hold = ptr->qTable;
     for(int i=0; i<ptr->hsize; i++){
       qclose(hold[i]);
     }
-  }
+  
   free(ptr->qTable);
   free(ptr);
+	}
 }
-
 int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
   ht_t *ptr = htp;
   int value = 1;
