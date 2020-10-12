@@ -7,6 +7,7 @@
 #include "queue.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 /* 
  * SuperFastHash() -- produces a number between 0 and the tablesize-1.
  * 
@@ -116,3 +117,16 @@ int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
 
 	
 
+void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* searchkeyp), const char *key, int32_t keylen){
+	if(htp!=NULL && key!=NULL && keylen>=0){
+		ht_t *ptr = (ht_t*)htp;
+		uint32_t pos;
+		pos = SuperFastHash(key,keylen,ptr->hsize);
+		queue_t **hold = ptr->qTable;
+		void *data=(void*)key;
+		void *rtrn=qsearch(hold[pos],searchfn,data);
+		return rtrn;
+	}
+	printf("ERROR With Hash/key/keylen");
+	return NULL;
+}
