@@ -12,14 +12,14 @@
 #include "list.h"
 #include "listfun.h"
 #include "queue.h"
-#include <stdlib>
-#include <stdio>
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
 
 int main(void){
 	hashtable_t *table; 
-	car_t *car1 = makcar("car1", 302.3, 2013);
+	car_t *car1 = makecar("car1", 302.3, 2013);
 	int key_length;
 	int tester;
 	uint32_t size = 20;
@@ -27,7 +27,7 @@ int main(void){
 	key_length = strlen(car1->plate);
 	table = hopen(size);
 
-	tester = hput(table, car1, car1->plate, keylength); 
+	tester = hput(table, car1, car1->plate, key_length); 
 
 	if(tester != 0 ){
 		printf("Fail1\n");
