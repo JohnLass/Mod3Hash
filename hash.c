@@ -100,5 +100,19 @@ void hclose(hashtable_t *htp){
   free(ptr);
 }
 
+int32_t hput(hashtable_t *htp, void *ep, const char *key, int keylen){
+  ht_t *ptr = htp;
+  int value = 1;
+  if((ptr!=NULL) && (ep!=NULL)){
+    uint32_t pos;
+    pos = SuperFastHash(key,keylen,ptr->hsize);
+    queue_t **hold = ptr->qTable;
+    value = qput(hold[pos],ep);
+  }
+
+  return value;
+  
+}
+
 	
 
