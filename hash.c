@@ -130,3 +130,15 @@ void *hsearch(hashtable_t *htp, bool (*searchfn)(void* elementp, const void* sea
 	printf("ERROR With Hash/key/keylen");
 	return NULL;
 }
+
+void happly(hashtable_t *htp, void (*fn)(void* ep)){
+	if(htp != NULL && fn != NULL){
+		ht_t *ptr = (ht_t *) htp;
+		for(int i = 0; i < ptr->hsize; i++){
+			qapply(ptr->qTable[i],fn);		
+		}
+	}
+	else{
+		printf("NULL arg\n");
+	}
+}
